@@ -7,8 +7,9 @@ class Item(models.Model):
     item_price = models.IntegerField()
     stock_quantity = models.IntegerField()
 
-    def sub_stock(self, quantity):
+    def sub_stock(self, quantity, save=True):
         if self.stock_quantity - quantity < 0:
             raise ValidationError('재고 부족으로 주문이 불가능합니다.')
         self.stock_quantity -= quantity
-        self.save()
+        if save:
+            self.save()

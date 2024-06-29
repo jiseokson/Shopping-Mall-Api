@@ -39,14 +39,14 @@ class OrderViewSet(
         
         order = Order(member=member)
         order_items = []
+        items = []
         for order_item_data in data['items']:
             try:
                 item = Item.objects.get(id=order_item_data['itemId'])
             except:
-                order.delete()
                 raise ValidationError('itemId를 가지는 상품이 존재하지 않습니다.')
             
-            item.sub_stock(order_item_data['orderQuantity'])
+            item.sub_stock(order_item_data['orderQuantity'], save=False)
             order_items.append(OrderItem(
                     order=order,
                     item=item,
@@ -55,6 +55,8 @@ class OrderViewSet(
         order.save()
         for order_item in order_items:
             order_item.save()
+        for item in items:
+            item.save()
 
         serializer = OrderSerializer(order)
         return Response(serializer.data)
