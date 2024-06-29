@@ -17,7 +17,6 @@ class MemberSerializer(serializers.ModelSerializer):
         fields = ['id', 'memberName', 'address']
     
     def create(self, validated_data):
-        print(validated_data)
         address_validated_data = validated_data.pop('address')
         address = Address.objects.create(**address_validated_data)
         return Member.objects.create(address=address, **validated_data)
