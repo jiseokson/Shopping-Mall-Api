@@ -47,6 +47,7 @@ class OrderViewSet(
                 raise ValidationError('itemId를 가지는 상품이 존재하지 않습니다.')
             
             item.sub_stock(order_item_data['orderQuantity'], save=False)
+            items.append(item)
             order_items.append(OrderItem(
                     order=order,
                     item=item,
