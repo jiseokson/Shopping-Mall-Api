@@ -23,7 +23,12 @@ from items.views import ItemViewSet
 from members.views import MemberViewSet
 from orders.views import OrderViewSet
 
-router = DefaultRouter()
+class OptionalSlashRouter(DefaultRouter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.trailing_slash = '/?'
+
+router = OptionalSlashRouter()
 router.register(r'members', MemberViewSet, basename='member')
 router.register(r'items', ItemViewSet, basename='item')
 router.register(r'orders', OrderViewSet, basename='order')
