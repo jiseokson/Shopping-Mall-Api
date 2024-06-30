@@ -1,11 +1,7 @@
 import os
 from datetime import datetime
 
-if not os.path.exists('logs'):
-    os.makedirs('logs/')
-    os.makedirs('logs/gunicorn/')
-
 workers = 3
 bind = 'unix:/run/gunicorn.sock'
-accesslog = f"./logs/gunicorn/log_{datetime.now().strftime('%Y-%m-%d')}.log"
-errorlog = f"./logs/gunicorn/log_{datetime.now().strftime('%Y-%m-%d')}.log"
+accesslog = f"./logs/gunicorn/access_{datetime.now().strftime('%Y_%m_%d')}.log"
+errorlog = f"./logs/gunicorn/error_{datetime.now().strftime('%Y_%m_%d')}.log"
